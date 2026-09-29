@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Tabiiy fanlar 6-sinf — animatsiya, simulyatsiya, o‘yinlar</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f8f3;--cd:#fff;--tx:#1c2a21;--mu:#5a6b5f;--ac:#2f8f5b;--al:#e5f2ea;--bd:#d8e3da;--rd:#d9534f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1512;--cd:#18211c;--tx:#e8f0ea;--mu:#9fb0a4;--ac:#5fcf90;--al:#1f3026;--bd:#2a3a30;--rd:#f07470}}
+:root[data-theme="dark"]{--bg:#0f1512;--cd:#18211c;--tx:#e8f0ea;--mu:#9fb0a4;--ac:#5fcf90;--al:#1f3026;--bd:#2a3a30;--rd:#f07470}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,sans-serif}
+main{max-width:640px;margin:auto;padding:12px}[hidden]{display:none!important}
+header{display:flex;justify-content:space-between;align-items:center}h1{font-size:18px;margin:4px 0}h3{margin:6px 0}
+button{font:inherit;color:var(--tx);background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin:3px 0;cursor:pointer}
+.on,.g{background:var(--ac)!important;color:#fff!important;border-color:var(--ac)}.b{background:var(--rd)!important;color:#fff!important}
+.card2{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:10px 0}
+summary{cursor:pointer;padding:4px 0}.tp{display:block;width:100%;text-align:left;font-size:15px}.lk{padding:6px 12px;color:var(--mu);font-size:14px}.mu{color:var(--mu);font-size:14px}
+canvas{width:100%;border-radius:10px;display:block}.ro{background:var(--al);border-radius:8px;padding:6px 10px;font-weight:600;margin:8px 0}
+label{display:block;margin:6px 0}input[type=range]{width:100%;accent-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.card{min-height:64px;font-size:15px}.opt{display:block;width:100%;text-align:left;margin:6px 0}
+code{background:var(--al);padding:1px 6px;border-radius:6px;font-size:14px}
+.s{border-left:4px solid #3b82c4;padding-left:8px}.l{border-left:4px solid #e0993a;padding-left:8px}.d{border-left:4px solid var(--ac);padding-left:8px}
+.jp{animation:jp .6s}.sk{animation:sk .5s}@keyframes jp{50%{transform:translateY(-22px)}}@keyframes sk{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.big{font-size:54px;text-align:center}
+</style></head><body><main>
+<header><h1>🌿 Tabiiy fanlar · 6-sinf</h1><b id="st">⭐ 0</b></header>
+<div id="home"></div>
+<div id="top" hidden><button onclick="home()">← Mavzular</button><h3 id="ttl"></h3><div class="card2"><canvas id="cv"></canvas><div id="ro" class="ro"></div><div id="ctl"></div></div><div id="info" class="card2"></div><button class="on" id="gbtn" onclick="playG()"></button><div id="gm" class="card2" hidden></div></div>
+</main>
+<script>
+const $=q=>document.querySelector(q),sh=a=>[...a].sort(()=>Math.random()-.5);
+let star=0;try{star=+localStorage.getItem('st6')||0}catch(e){}
+const addS=n=>{star+=n;$('#st').textContent='⭐ '+star;try{localStorage.setItem('st6',star)}catch(e){}};
+const BOB=[['1-bob. Tabiatni o‘rganish','🔬',['Tabiiy fanlarning tadqiqot obyekti','Ilmiy tadqiqotni rejalashtirish','Ma’lumotlarni grafikda tasvirlash','Ekosistema modelini yasash']],
+['2-bob. Modda va uning xossalari','🧊',['Modda tuzilishi','Moddaning uch holatini kuzatish','Gazlar','Suyuqliklar','Diffuziya hodisasini o‘rganish','Qattiq moddalar','Moddaning zichligi','Turli shaklli jismlarning zichligini aniqlash','Bug‘lanish, qaynash va kondensatsiya','Sun’iy yomg‘ir hosil qilish','Novvot tayyorlash texnologiyasi']],
+['3-bob. Tirik organizmlarning xilma-xilligi','🦋',['Tirik organizmlar klassifikatsiyasi','O‘simliklar dunyosi','Hayvonot dunyosi','O‘simliklar sistematikasini o‘rganish','Hayvonlar sistematikasini o‘rganish']],
+['4-bob. Tirik organizmlarning tuzilishi','🫀',['Tirik organizmlarning tuzilishi','Tirik organizmlarning oziqlanishi','Odamning ovqat hazm qilish sistemasi','Ratsional ovqatlanish, kunlik ratsion','Tirik organizmlarning nafas olishi','Oziq moddalar transporti','Tirik organizmlarning ayirishi','Tirik organizmlarning ta’sirlanishi','Tirik organizm – yaxlit sistema']],
+['5-bob. Ekologiya va barqaror rivojlanish','♻️',['Iqlim','Iqlimga ta’sir etuvchi omillar','Iqlim o‘zgarishining Yer tabiatiga ta’siri','Ekosistemalardagi o‘zaro munosabatlar','Ekosistemalarda energiya oqimi','Toza ichimlik suvni olish']],
+['6-bob. Quyosh sistemasi va koinot','🪐',['Quyosh sistemasi','Yulduzlar','Qutb yulduziga qarab mo‘ljal olish','Oy – Yerning tabiiy yo‘ldoshi','Oy holatini kuzatish']],
+['7-bob. Geografik xaritalar','🗺️',['Geografik xaritalar','Masshtablar bilan ishlash','Geografik koordinatalarni aniqlash','Joy balandligini o‘lchash','Relyefning gorizontallar bilan tasvirlanishi']],
+['8-bob. Yer qobiqlari','🌋',['Litosfera plitalari','Vulqon maketini yasash','Gidrosfera va uning qismlari','Atmosfera tuzilishi','Havo bosimi','Havo harorati','Haroratning sutkalik va yillik amplitudasi','Biosfera']],
+['9-bob. Mening Vatanim','🇺🇿',['O‘zbekiston dunyo xaritasida','Ma’muriy-hududiy bo‘linish mozaikasi','Mashhur tabiiy obyektlar','Muhofaza etiladigan tabiiy obyektlar','O‘zbekiston iqlimining o‘ziga xosligi']],
+['10-bob. Harakat va kuch','🚴',['Harakat turlari','Kuch','Oddiy mexanizmlar','Odamning tayanch-harakat sistemasi','Richagni muvozanatga keltirish','Suyuqlik va gazlarda bosim','Bosim tirik organizmlar hayotida','Suyuqliklarda bosim','Tutash idishlar','Tutash idishlarda suyuqlik joylashuvi','Nima uchun kemalar cho‘kmaydi?','Jismlarning suzish shartlari']],
+['11-bob. Energiya','💡',['Yorug‘lik hodisalari','Linzalar','Shisha prizmadan yorug‘likning o‘tishi','Jismlarning issiqlikdan kengayishi','Issiqlikning uzatilishi','Energiya va ekologiya','Energiyani tejash','Energiyani tejash (loyiha)','Energiya almashinuvi']],
+['12-bob. Elektr va magnit hodisalar','🧲',['Jismlarning elektrlanishi','Meva va sabzavotlardan elektr olish','Sodda elektr zanjiri','Lampochkalarning ulanish shakllari','Elektr xavfsizlik choralari','Magnit – bizning hayotimizda','Magnitdan foydalanish']]];
+const TT=BOB.flatMap(b=>b[2]),M={};let cur=null,cid=0,V=[],st={};
+const cv=$('#cv'),g=cv.getContext('2d');cv.width=720;cv.height=400;g.scale(2,2);
+/* ENGINELAR */
+function quiz(b,Q){let i=0,ok=0;const s=()=>{if(i>=Q.length){addS(ok);b.innerHTML=`<h3>Natija: ${ok}/${Q.length} · ⭐+${ok}</h3><button onclick="playG()">🔁 Qayta o‘ynash</button>`;return}
+const q=Q[i];b.innerHTML=`<p><b>${i+1}/${Q.length}.</b> ${q[0]}</p>`+q[1].map(o=>`<button class="opt">${o}</button>`).join('')+'<p id="fb"></p>';
+b.querySelectorAll('.opt').forEach((e,j)=>e.onclick=()=>{b.querySelectorAll('.opt').forEach((x,k)=>{x.disabled=1;if(k==q[2])x.classList.add('g')});if(j==q[2])ok++;else e.classList.add('b');
+$('#fb').innerHTML=(j==q[2]?'✅ To‘g‘ri! ':'❌ Xato. ')+q[3]+'<br><button onclick="nx()">Keyingisi ▶</button>'})};window.nx=()=>{i++;s()};s()}
+function order(b,S,tt){let n=0,er=0;const P=sh(S.map((x,i)=>[x,i])),dr=()=>{b.innerHTML=`<h3>${tt}</h3><p>Qadamlarni to‘g‘ri tartibda bosing (xato: ${er})</p><ol>`+S.slice(0,n).map(x=>`<li>${x}</li>`).join('')+'</ol>'+P.filter(p=>p[1]>=n).map(p=>`<button class="opt" data-i="${p[1]}">${p[0]}</button>`).join('')+(n==S.length?`<h3>✅ Ajoyib! ⭐+${Math.max(1,S.length-er)}</h3><button onclick="playG()">🔁 Qayta</button>`:'');
+b.querySelectorAll('.opt').forEach(e=>e.onclick=()=>{if(+e.dataset.i==n){n++;dr();if(n==S.length)addS(Math.max(1,S.length-er))}else{er++;e.classList.add('b','sk')}})};dr()}
+function mem(b,P){const c=sh(P.flatMap((p,i)=>[[p[0],i],[p[1],i]]));let a=null,ok=0,mv=0,lk=0;
+b.innerHTML='<p id="mv">Juftlarni toping</p><div class="grid">'+c.map(()=>'<button class="card">?</button>').join('')+'</div>';const K=b.querySelectorAll('.card');
+K.forEach((e,j)=>e.onclick=()=>{if(lk||e.classList.contains('g')||a===j)return;e.textContent=c[j][0];if(a===null){a=j;return}mv++;const f=K[a];
+if(c[a][1]==c[j][1]){e.classList.add('g');f.classList.add('g');a=null;if(++ok==P.length){addS(P.length);$('#mv').innerHTML=`🎉 ${mv} urinishda! ⭐+${P.length} <button onclick="playG()">🔁</button>`}}else{lk=1;setTimeout(()=>{e.textContent=f.textContent='?';a=null;lk=0},700)}})}
+function chal(b,o){let L=0;const lv=()=>{if(L>=o.lv.length){b.innerHTML='<h3>🏆 Barcha bosqichlar o‘tildi!</h3><div class="big jp">'+o.e+'</div><button onclick="playG()">🔁 Qayta o‘ynash</button>';return}const l=o.lv[L];
+b.innerHTML=`<h3>${o.t} — ${L+1}/${o.lv.length}</h3><p>${l.g}</p><div id="em" class="big">${o.e}</div>`+o.s.map((x,j)=>`<label>${x.l}: <b id="gv${j}">${l.v??x.v}</b><input id="gs${j}" type="range" min="${l.mn??x.min}" max="${l.mx??x.max}" step="${x.st||1}" value="${l.v??x.v}" oninput="$('#gv${j}').textContent=this.value"></label>`).join('')+'<button id="go">▶ Sinab ko‘r</button><div id="rs"></div>';
+$('#go').onclick=()=>{const v=o.s.map((_,j)=>+$('#gs'+j).value),r=o.f(v,l);$('#em').className='big '+(r[0]?'jp':'sk');$('#rs').innerHTML=`<p>${r[0]?'✅':'❌'} ${r[1]}</p>`+(r[0]?'<button id="nx2">Keyingi ▶</button>':'');if(r[0]){addS(3);$('#nx2').onclick=()=>{L++;lv()}}}};lv()}
+/* MODULLAR — har bir partiya shu yerga qo‘shiladi */
+/*MODS-START*/
+M[1]={e:'🔬',gt:'🎮 Saralash o‘yini',s:[{l:'Fan',min:1,max:5,v:1,nm:['Fizika','Kimyo','Biologiya','Geografiya','Astronomiya']}],
+sci:'Tadqiqot obyekti — o‘rganilayotgan jonsiz yoki jonli tabiatdagi jarayon va hodisa («Nimani tadqiq etasiz?»). Predmet — obyektning hal qilinayotgan muammoga oid jihati («Qaysi jihatini?»).',
+life:'Avtomobil obyekt bo‘lsa, uning xavfsizlik yoki boshqaruv mexanizmi predmet bo‘lishi mumkin.',
+les:'Slayder bilan fanni tanlang: har bir fan o‘z obyekti va predmetini o‘rganadi. Guruhda muhokama: tabiiy fanlar matematika, informatika, tarix bilan qanday bog‘liq?',
+d:(g,V,s)=>{const i=V[0]-1,E=['⚛️','🧪','🌿','🌍','🔭'],O=['Jonsiz tabiat','Jonsiz tabiat','Tirik organizmlar','Jonsiz tabiat va tirik organizmlar','Osmon jismlari'],P=['moddaning tuzilishi, elektr energiyasini ishlab chiqarish','moddalarning xususiyatlari, kimyoviy jarayonlar','o‘simlik ildizi tuzilishi, mineral oziqlanish, bakteriyalar ko‘payishi','okean, tog‘ jinslari, zilzila, shamol, qazilma boyliklar','Quyosh, Oy, Yer, sayyoralar va meteoritlar harakati'];
+g.fillStyle='#eaf4ee';g.fillRect(0,0,360,200);g.font='54px serif';g.fillText(E[i],153,118);
+['🔎','📏','📝'].forEach((c,k)=>{const a=s.t*(1+k*.4)+k*2.1;g.font='24px serif';g.fillText(c,168+Math.cos(a)*(75+k*10),108+Math.sin(a)*(45+k*8))});
+return`Obyekt: ${O[i]}. Predmet: ${P[i]}.`},
+g:b=>{const I=[['Avtomobil',0],['Suv',0],['Tosh',0],['Pingvinlar koloniyasi',1],['O‘simliklar',1],['O‘rmon ekosistemasi',1],['Nafas olish',2],['Vulqon otilishi',2],['Tog‘ hosil bo‘lishi',2],['Yomg‘ir yog‘ishi',3],['Shamol esishi',3],['Muzning erishi',3]],C=['Jonsiz jism','Tirik tabiat','Jarayon','Hodisa'];
+quiz(b,sh(I).slice(0,8).map(x=>[`«${x[0]}» qaysi guruhga kiradi?`,C,x[1],`${x[0]} — ${C[x[1]].toLowerCase()}.`]))}};
+M[2]={e:'📋',gt:'🎮 Rejani tuz',s:[{l:'Tajriba guruhi: sug‘orish (0 kam … 10 ko‘p)',min:0,max:10,v:9},{l:'Kun',min:1,max:30,v:15}],
+sci:'Tadqiqot rejasi 6 qadam: mavzu → maqsad va vazifalar → obyekt va predmet → metodlar → ma’lumot to‘plash → natijani baholash. Tajribada tajriba guruhi (omil o‘zgartiriladi) va nazorat guruhi (odatdagi sharoit) taqqoslanadi.',
+life:'Sug‘orish o‘simlik o‘sishiga qanday ta’sir qiladi? Bir xil o‘simliklar bir oy kuzatilib, bo‘yi va barglar soni kundalikka yoziladi.',
+les:'Metodlar: kuzatish, o‘lchash, tajriba, taqqoslash, modellashtirish. Sug‘orishni o‘zgartirib, qaysi o‘simlik yaxshi o‘sishini toping (sodda model).',
+d:(g,V,s)=>{const f=w=>Math.max(.1,1-Math.pow((w-5)/5,2)*.85),D=V[1];g.fillStyle='#e9f2fb';g.fillRect(0,0,360,200);
+[[100,V[0],'Tajriba'],[260,5,'Nazorat']].forEach(a=>{const x=a[0],w=a[1],h=D*f(w)*.8,px=Math.min(120,6+h*5),n=Math.min(12,Math.floor(h/2));g.fillStyle='#b5651d';g.fillRect(x-28,160,56,30);
+g.strokeStyle=f(w)<.5?'#b5a642':'#3d9a55';g.lineWidth=5;g.beginPath();g.moveTo(x,160);g.lineTo(x,160-px);g.stroke();g.fillStyle=g.strokeStyle;
+for(let k=0;k<n;k++){g.beginPath();g.ellipse(x+(k%2?11:-11),160-(k+1)*px/(n+1),9,4,0,0,7);g.fill()}g.fillStyle='#345';g.font='13px sans-serif';g.fillText(a[2]+': suv '+w+'/10',x-42,16)});
+return`Kun ${D}: tajriba ${(D*f(V[0])*.8).toFixed(1)} sm · nazorat ${(D*.8).toFixed(1)} sm`},
+g:b=>order(b,['Tadqiqot mavzusini tanlash','Maqsad va vazifalarni aniqlash','Obyekt va predmetni belgilash','Tadqiqot metodlarini belgilash','Ma’lumot to‘plash, kuzatish, tajriba','Natijani baholash va xulosa qilish'],'Tadqiqot rejasini to‘g‘ri tartibga soling')};
+M[3]={e:'📈',gt:'🎮 O‘rtachani top',s:[{l:'Soat',min:0,max:5,v:3,nm:['08:00','10:00','12:00','14:00','16:00','18:00']}],
+sci:'O‘rtacha arifmetik qiymat = qiymatlar yig‘indisi ÷ ularning soni. Grafikda gorizontal o‘qqa vaqt (yoki guruh), vertikal o‘qqa kattalik qo‘yiladi; grafik o‘zgarish tendensiyasini ko‘rsatadi.',
+life:'Havo harorati ertalab ko‘tarilib, tushdan keyin pasayadi. Sinf o‘quvchilari bo‘yining o‘rtachasi ham shunday topiladi.',
+les:'Darslikdagi jadval: 08:00–18:00 oralig‘ida harorat 16, 23, 30, 32, 25, 17 °C. Soatni tanlab qiymatni o‘qing va o‘rtacha bilan solishtiring.',
+d:(g,V,s,dt)=>{const T=[16,23,30,32,25,17],H=['08:00','10:00','12:00','14:00','16:00','18:00'],X=i=>45+i*54,Y=t=>170-(t-10)*6,A=143/6,n=(s.pr=Math.min(1,(s.pr||0)+dt*.5))*5;
+g.fillStyle='#fff';g.fillRect(0,0,360,200);g.strokeStyle='#888';g.lineWidth=1;g.beginPath();g.moveTo(40,20);g.lineTo(40,170);g.lineTo(340,170);g.stroke();
+g.fillStyle='#555';g.font='11px sans-serif';[10,20,30].forEach(t=>g.fillText(t,14,Y(t)+4));H.forEach((h,i)=>g.fillText(h.slice(0,2),X(i)-6,186));
+g.setLineDash([4,4]);g.strokeStyle='#e0993a';g.beginPath();g.moveTo(40,Y(A));g.lineTo(340,Y(A));g.stroke();g.setLineDash([]);
+g.strokeStyle='#2f8f5b';g.lineWidth=3;g.beginPath();g.moveTo(X(0),Y(T[0]));for(let i=1;i<6;i++){const f=Math.min(1,n-(i-1));if(f<=0)break;g.lineTo(X(i-1)+(X(i)-X(i-1))*f,Y(T[i-1])+(Y(T[i])-Y(T[i-1]))*f)}g.stroke();
+const k=V[0];g.strokeStyle='#d9534f';g.lineWidth=1;g.beginPath();g.moveTo(X(k),20);g.lineTo(X(k),170);g.stroke();g.fillStyle='#d9534f';g.beginPath();g.arc(X(k),Y(T[k]),6,0,7);g.fill();
+return`${H[k]} → ${T[k]} °C · o‘rtacha ≈ ${A.toFixed(1)} °C (sariq chiziq)`},
+g:b=>chal(b,{t:'O‘rtachani top',e:'🧮',s:[{l:'O‘rtacha qiymat',min:0,max:1,v:0,st:.5}],lv:[{g:'Darsliklar massasi: 600 g, 400 g, 500 g',x:500,mn:300,mx:700,v:300,tl:5},{g:'Bo‘y (sm): 145, 147, 146, 148',x:146.5,mn:140,mx:155,v:140,tl:.25},{g:'Harorat (°C): 16, 23, 30, 32, 25, 17 (aniqlik ±0,5)',x:23.83,mn:10,mx:40,v:10,tl:.5}],
+f:(v,l)=>[Math.abs(v[0]-l.x)<=l.tl,`To‘g‘ri javob ≈ ${l.x}; sizniki ${v[0]}`]})};
+M[4]={e:'🌳',gt:'🎮 Muvozanat o‘yini',s:[{l:'Quyosh nuri',min:0,max:10,v:8},{l:'Suv',min:0,max:10,v:7},{l:'Ifloslanish',min:0,max:10,v:2}],
+sci:'Ekosistemaning tirik qismi — o‘simlik, hayvon, zamburug‘, bakteriya; jonsiz qismi — tosh, tuproq, suv, gazlar. O‘simlik → o‘txo‘r → yirtqich; qoldiqlar mikroorganizmlar orqali minerallarga aylanib, yana o‘simlikka o‘tadi.',
+life:'Zavod-fabrikalar qurilishi, o‘rmonlar kesilishi va ifloslanish ekosistemaga salbiy ta’sir qiladi.',
+les:'Loyiha: shisha idishga qum → shag‘al → tuproq → bioo‘g‘it → o‘simliklar qatlamlarini joylab, suv purkab model yasang. Simulyatsiyada omillarni o‘zgartiring (sodda model).',
+d:(g,V,s)=>{const P=Math.round(Math.min(V[0],V[1])*(1-V[2]/12)),H=Math.round(P*.6),Y=Math.round(H*.5);g.fillStyle=V[2]>5?'#cfd3c0':'#dff1e4';g.fillRect(0,0,360,200);g.fillStyle='#8a6a4a';g.fillRect(0,172,360,28);
+[['🌱',P,60],['🐰',H,105],['🦊',Y,150]].forEach((r,k)=>{g.font='22px serif';for(let i=0;i<r[1];i++)g.fillText(r[0],14+i*32,r[2]+Math.sin(s.t*2+i+k)*3)});
+g.font='12px sans-serif';g.fillStyle='#fff';g.fillText('🍄 mikroorganizmlar qoldiqni minerallarga aylantiradi',10,191);return`O‘simlik ${P} · o‘txo‘r ${H} · yirtqich ${Y}`},
+g:b=>chal(b,{t:'Ekosistema muvozanati',e:'🌍',s:[{l:'Quyosh nuri',min:0,max:10,v:5},{l:'Suv',min:0,max:10,v:5}],lv:[{g:'Ifloslanish 0: kamida 2 ta yirtqich bo‘lsin',i:0},{g:'Ifloslanish 4: kamida 2 ta yirtqich bo‘lsin',i:4},{g:'Ifloslanish 6: kamida 2 ta yirtqich bo‘lsin',i:6}],
+f:(v,l)=>{const P=Math.round(Math.min(v[0],v[1])*(1-l.i/12)),H=Math.round(P*.6),Y=Math.round(H*.5);return[Y>=2,`🌱${P} 🐰${H} 🦊${Y} — ${Y>=2?'zanjir barqaror!':'yirtqichlar yetmadi'}`]}})};
+M[5]={e:'⚛️',gt:'🎮 Xotira: holat xossalari',s:[{l:'Holat',min:1,max:3,v:3,nm:['Qattiq','Suyuq','Gaz']},{l:'Idish kengligi',min:120,max:260,v:200}],
+sci:'Modda mayda zarralardan (molekulalardan) iborat. Zarralar o‘zgarmaydi, lekin joylashuvi, harakati va o‘zaro ta’siri holatga qarab farq qiladi: qattiq — zich, suyuq — birmuncha bo‘sh, gaz — bir-biridan uzoq.',
+life:'Xonadagi havo idishni to‘liq egallaydi, sharbat stakan shaklini oladi, qalam esa shaklini saqlaydi.',
+les:'3 ta shprisda havo, suv va qumni siqib ko‘ring. Simulyatsiyada holatni va idish kengligini o‘zgartirib, zarralar harakatini kuzating.',
+d:(g,V,s,dt)=>{if(!s.q){s.q=[];for(let i=0;i<40;i++)s.q.push({x:80+Math.random()*100,y:100+Math.random()*80,a:Math.random()*6.28})}
+const m=V[0],W=V[1],x0=50,x1=x0+W,yt=180-6750/W,sp=m==1?0:m==2?45:130;g.fillStyle='#eaf2fb';g.fillRect(0,0,360,200);g.fillStyle='#fff';g.fillRect(x0,30,W,150);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(x0,30,W,150);
+s.q.forEach((p,i)=>{if(m==1){p.x+=(x0+12+(i%8)*13-p.x)*.12+Math.random()-.5;p.y+=(172-Math.floor(i/8)*13-p.y)*.12+Math.random()-.5}else{p.x+=Math.cos(p.a)*sp*dt;p.y+=Math.sin(p.a)*sp*dt;const t=m==3?34:yt;
+if(p.x<x0+4){p.x=x0+4;p.a=Math.PI-p.a}if(p.x>x1-4){p.x=x1-4;p.a=Math.PI-p.a}if(p.y<t){p.y=t;p.a=-p.a}if(p.y>176){p.y=176;p.a=-p.a}}
+g.fillStyle=m==1?'#3b6fb5':m==2?'#3b9ac9':'#e0793a';g.beginPath();g.arc(p.x,p.y,4,0,7);g.fill()});
+return['Qattiq: aniq shakl va hajm, zarralar zich','Suyuq: idish shaklini oladi, hajmi o‘zgarmaydi','Gaz: idishni to‘liq egallaydi'][m-1]},
+g:b=>mem(b,[['🧱 Qattiq','shakli va hajmi aniq'],['💧 Suyuq','idish shaklini oladi'],['💨 Gaz','hajmini to‘liq egallaydi'],['Qalam','qattiq jism'],['Sharbat','suyuqlik'],['Havo','gaz']])};
+M[6]={e:'🧊',gt:'🎮 Termometr o‘yini',s:[{l:'Olov quvvati',min:0,max:10,v:5}],
+sci:'Muz qizdirilsa suyuqlikka, suv qaynasa bug‘ga (gazga) aylanadi. Bunda zarralar o‘zgarmaydi, faqat harakati va joylashuvi o‘zgaradi. Erish va qaynash paytida harorat o‘zgarmay turadi.',
+life:'Inson organizmida suyaklar — qattiq, qon — suyuq, o‘pkadagi havo — gaz holatdagi moddadir.',
+les:'Tajriba: muz → suv → bug‘. Olov quvvatini tanlab, haroratni kuzating (texnika xavfsizligiga rioya qiling). «↺ Qayta» bilan boshlang.',
+d:(g,V,s,dt)=>{const E=s.E=Math.min(220,(s.E||0)+V[0]*dt*6);let T,f=0,b=0,lab;
+if(E<10){T=-10+E;lab='Muz qizimoqda'}else if(E<40){T=0;f=(E-10)/30;lab='Muz erimoqda'}else if(E<140){T=E-40;f=1;lab='Suv qizimoqda'}else if(E<200){T=100;f=1;b=(E-140)/60;lab='Suv qaynayapti'}else{T=100;f=1;b=1;lab='Hammasi bug‘ga aylandi'}
+g.fillStyle='#f3efe6';g.fillRect(0,0,360,200);const hw=f*(1-b)*90;g.fillStyle='rgba(59,154,201,.6)';g.fillRect(111,159-hw,138,hw);
+if(f<1){g.fillStyle='#bfe8f7';const z=26*(1-f);for(let k=0;k<4;k++)g.fillRect(122+k*30,159-z,z,z)}
+g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(110,50,140,110);g.fillStyle='#fff';
+if(T>=90&&b<1)for(let k=0;k<6;k++){g.beginPath();g.arc(125+k*19,150-((s.t*40+k*17)%80),3,0,7);g.fill()}
+if(T>=100){g.font='20px serif';for(let k=0;k<4;k++)g.fillText('💨',125+k*30,44-((s.t*30+k*10)%36))}
+if(V[0]>0){g.font=(16+V[0]*2)+'px serif';g.fillText('🔥',160,196)}
+const h=(T+10)/110*130;g.fillStyle='#ccc';g.fillRect(300,30,14,130);g.fillStyle=T>0?'#e5533d':'#3d8fe5';g.fillRect(300,160-h,14,h);return`${lab}: ${T.toFixed(0)} °C`},
+g:b=>chal(b,{t:'Termometr',e:'🌡️',s:[{l:'Harorat (°C)',min:-20,max:120,v:20}],lv:[{g:'Suvni muzga aylantiring',k:0},{g:'Suvni suyuq holatda saqlang',k:1},{g:'Suvni bug‘ga aylantiring',k:2}],
+f:(v,l)=>{const t=v[0],k=t<0?0:t<100?1:2;return[k==l.k,`${t} °C da suv — ${['muz','suyuq suv','bug‘'][k]}`]}})};
+M[7]={e:'💨',gt:'🎮 Gazlar viktorinasi',s:[{l:'Porshenni bosish',min:0,max:10,v:0}],
+sci:'Gaz xususiy shakl va hajmga ega emas: u turgan idishning butun hajmini egallaydi. Gaz zarralari orasidagi masofa juda katta, shuning uchun gazni siqish oson.',
+life:'Havo yostiqchalari, g‘avvos ballonlari, parashyut va tabiiy gaz — hammasi gazning xossalariga tayanadi. Tabiiy gaz hidsiz, shu sababli unga hid qo‘shiladi. Chala yonganda o‘ta xavfli is gazi hosil bo‘ladi.',
+les:'Tajriba (o‘qituvchi nazoratida): shamni yoqing, so‘ng ustini shisha idish bilan yoping — nima bo‘lishini kuzating. Simulyatsiyada porshenni bosib, zarralar orasidagi masofa qanday o‘zgarishini ko‘ring.',
+d:(g,V,s,dt)=>{if(!s.q){s.q=[];for(let i=0;i<30;i++)s.q.push({x:60+Math.random()*100,y:65+Math.random()*70,a:Math.random()*6.28})}
+const W=240-V[0]*16,x0=50,x1=x0+W;g.fillStyle='#eaf2fb';g.fillRect(0,0,360,200);g.fillStyle='#fff';g.fillRect(x0,55,W,90);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(x0,55,W,90);g.fillStyle='#8a94a6';g.fillRect(x1,45,10,110);g.fillRect(x1+10,96,50,8);
+s.q.forEach(p=>{p.x+=Math.cos(p.a)*110*dt;p.y+=Math.sin(p.a)*110*dt;if(p.x<x0+4){p.x=x0+4;p.a=Math.PI-p.a}if(p.x>x1-4){p.x=x1-4;p.a=Math.PI-p.a}if(p.y<59){p.y=59;p.a=-p.a}if(p.y>141){p.y=141;p.a=-p.a}g.fillStyle='#e0793a';g.beginPath();g.arc(p.x,p.y,4,0,7);g.fill()});
+return`Hajm: ${Math.round(W/2.4)}% · ${V[0]<3?'zarralar orasi katta':'zarralar yaqinlashdi'} — gaz siqiladi`},
+g:b=>quiz(b,[['Gaz idishga solinsa nima bo‘ladi?',['O‘z shaklini saqlaydi','Idishning butun hajmini egallaydi','Faqat pastki qismida to‘planadi'],1,'Gaz xususiy shakl va hajmga ega emas.'],
+['Nima uchun gazni siqish mumkin?',['Zarralari orasidagi masofa juda katta','Zarralari bir-biriga yopishgan','U juda og‘ir'],0,'Zarralar orasi katta bo‘lgani uchun ular yaqinlashtirilishi mumkin.'],
+['Tabiiy gaz to‘liq yonganda nima hosil bo‘ladi?',['Is gazi','Suv bug‘i va karbonat angidrid','Faqat kislorod'],1,'Chala yonganda esa hayot uchun o‘ta xavfli is gazi hosil bo‘ladi.'],
+['Nima uchun tabiiy gazga hid qo‘shiladi?',['Yaxshi hid bo‘lishi uchun','Gaz sizsa sezib, xavfsizlikni ta’minlash uchun','Tezroq yonishi uchun'],1,'Tabiiy gaz hidsiz, hid esa sizib chiqishni bildiradi.'],
+['Shisha idish bilan yopilgan sham nega o‘chadi?',['Havo yetishmay qoladi','Sham sovib ketadi','Idish og‘ir bo‘ladi'],0,'Olov yonishi uchun havo zarur.']])};
+M[8]={e:'💧',gt:'🎮 Suyuqlik juftliklari',s:[{l:'Idish',min:1,max:3,v:1,nm:['Stakan','Kolba','Menzurka']}],
+sci:'Suyuqlik idish shaklini oladi, lekin o‘z hajmini saqlaydi, shuning uchun uni siqish qiyin. Zarralari bir-biriga yaqin, ammo qattiq moddalar kabi zich emas va ko‘proq harakatlanadi.',
+life:'Odamda o‘rtacha 5 litr qon bor. Asal sekin oqadi, neft va simob tarkibida suv yo‘q, lekin ular ham suyuqlik. Qum va kukun idish shaklini oladi, biroq ularning har bir zarrasi qattiq modda.',
+les:'Bir xil hajmdagi suvni stakan, kolba va menzurkaga quying: shakl o‘zgaradimi, hajm-chi? Simulyatsiyada idishni almashtirib, suyuqlik sathini kuzating.',
+d:(g,V,s)=>{const i=V[0]-1,w=[80,120,40][i],h=4800/w,H=[100,70,150][i],x=(360-w)/2;g.fillStyle='#eef3f9';g.fillRect(0,0,360,200);g.fillStyle='rgba(59,154,201,.65)';g.beginPath();g.moveTo(x,180);g.lineTo(x,180-h);for(let k=0;k<=w;k+=4)g.lineTo(x+k,180-h+Math.sin(s.t*3+k/8)*2);g.lineTo(x+w,180);g.fill();
+g.strokeStyle='#557';g.lineWidth=3;g.beginPath();g.moveTo(x,180-H);g.lineTo(x,180);g.lineTo(x+w,180);g.lineTo(x+w,180-H);g.stroke();
+return`${['Stakan','Kolba','Menzurka'][i]}: shakl o‘zgardi, hajm o‘zgarmadi (100 ml)`},
+g:b=>mem(b,[['Qon','tanamizdagi suyuqlik'],['Simob','suv yo‘q, lekin suyuq'],['Qum','har bir zarrasi qattiq'],['Loy','suyuq va qattiq xossalari'],['Asal','sekin oquvchan suyuqlik'],['Suv','qor va muz holatida ham uchraydi']])};
+M[9]={e:'🎨',gt:'🎮 Tajribani tartibga sol',s:[{l:'Suv harorati (°C)',min:5,max:90,v:20}],
+sci:'Diffuziya — bir modda zarralarining ikkinchi modda zarralariga aralashishi yoki tarqalishi. U gazlarda eng tez, suyuqliklarda sekinroq, qattiq jismlarda juda sekin kechadi. Harorat ortsa, diffuziya tezlashadi.',
+life:'Oshxonadagi taom hidi va to‘kilgan atir hidi xonaga diffuziya tufayli tarqaladi. Choydagi shakar ham shunday eriydi. Zavod va transport gazlari havoga diffuziya orqali aralashib, uni ifloslaydi.',
+les:'Amaliy ish: ikki stakanga sovuq va issiq suv quying, har biriga bir necha tomchi oziq-ovqat bo‘yog‘i tomizing. Qaysi stakanda bo‘yoq tez tarqaladi? Simulyatsiyada haroratni o‘zgartirib, taqqoslang.',
+d:(g,V,s,dt)=>{if(!s.q){s.q=[];for(let i=0;i<60;i++)s.q.push({x:175+Math.random()*10,y:50+Math.random()*10,a:Math.random()*6.28})}
+const sp=10+V[0]*.9;g.fillStyle='#f3f6fa';g.fillRect(0,0,360,200);g.fillStyle=V[0]>=50?'#fbe3d6':'#dff0fb';g.fillRect(100,40,160,135);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(100,40,160,135);
+s.q.forEach(p=>{p.a+=(Math.random()-.5)*1.5;p.x+=Math.cos(p.a)*sp*dt;p.y+=Math.sin(p.a)*sp*dt;if(p.x<104){p.x=104;p.a=Math.PI-p.a}if(p.x>256){p.x=256;p.a=Math.PI-p.a}if(p.y<44){p.y=44;p.a=-p.a}if(p.y>171){p.y=171;p.a=-p.a}g.fillStyle='rgba(217,83,79,.7)';g.beginPath();g.arc(p.x,p.y,3.5,0,7);g.fill()});
+return`${V[0]} °C: bo‘yoq ${V[0]>=50?'tez':'sekin'} tarqaladi`},
+g:b=>order(b,['Ikkita shaffof stakanni oling','Birinchisiga sovuq, ikkinchisiga issiq suv quying','Har biriga bir necha tomchi oziq-ovqat bo‘yog‘ini tomizing','Ranglarning tarqalishini kuzating va taqqoslang'],'Diffuziya tajribasini tartibga soling')};
+M[10]={e:'🧱',gt:'🎮 Qattiq yoki suyuq?',s:[{l:'Zarralar tebranishi',min:1,max:10,v:3}],
+sci:'Qattiq jism ma’lum shakl va hajmga ega. Zarralari bir-biriga juda yaqin joylashgan va turgan joyida faqat tebranma harakat qiladi, shuning uchun jismni tark etmaydi.',
+life:'Parta, qalam, qozon, choynak, g‘isht, sement, marmar — hammasi qattiq jism. Plastilin, xamir va loy esa tashqi kuch ta’sirida shaklini o‘zgartiradi. Sopol idishlar loydan yasalib, pechda pishiriladi.',
+les:'Guruhda muhokama: Registon maydonidagi madrasalar qanday qattiq jismlardan qurilgan? Simulyatsiyada tebranishni kuchaytirib, zarralar joyidan siljimasligini kuzating.',
+d:(g,V,s)=>{g.fillStyle='#f1efe9';g.fillRect(0,0,360,200);g.fillStyle='#e6e0d2';g.fillRect(90,40,180,120);g.strokeStyle='#8a7a5a';g.lineWidth=3;g.strokeRect(90,40,180,120);const A=V[0]*.6;for(let r=0;r<5;r++)for(let c=0;c<8;c++){g.fillStyle='#3b6fb5';g.beginPath();g.arc(112+c*20+Math.sin(s.t*20+r*3+c)*A,58+r*22+Math.cos(s.t*22+c*2+r)*A,6,0,7);g.fill()}return'Zarralar joyida tebranadi — jism shakli va hajmi o‘zgarmaydi'},
+g:b=>{const I=[['Soda',0],['Tuz',0],['Sovun',0],['Po‘kak',0],['Shisha',0],['Parafin',0],['Pishloq',0],['Sochiq',0],['Sharbat',1],['Shampun',1],['Atir',1],['Asal',1],['Qaymoq',1]],C=['Qattiq','Suyuq'];quiz(b,sh(I).slice(0,8).map(x=>[`«${x[0]}» — qattiq yoki suyuqmi?`,C,x[1],`${x[0]} — ${C[x[1]].toLowerCase()} modda.`]))}};
+M[11]={e:'⚖️',gt:'🎮 Zichlikni top',s:[{l:'Modda',min:1,max:12,v:5,nm:['Oltin','Qo‘rg‘oshin','Kumush','Mis','Temir','Cho‘yan','Alyuminiy','Deraza oynasi','G‘isht','Muz','Yog‘och','Po‘kak']},{l:'Hajm (cm³)',min:1,max:20,v:10}],
+sci:'Zichlik — moddaning birlik hajmiga mos massasi: ρ = m / V. Birligi g/cm³ (yoki kg/m³). Bir xil hajmdagi turli moddalarning massasi turlicha, chunki zarralari turlicha zich joylashgan.',
+life:'Mis va alyuminiy kublar bir xil hajmda bo‘lsa ham massalari farq qiladi. Zichlikni aniqlab, zargarlik buyumlarining haqiqiyligini tekshirish mumkin. Mandarin po‘sti bilan suzadi, po‘stsiz cho‘kadi.',
+les:'Moddani va hajmni tanlab, massa m = ρ·V ni ko‘ring. Jadval bilan solishtiring: oltin 19,3, temir 7,8, muz 0,9, po‘kak 0,24 g/cm³.',
+d:(g,V,s)=>{const N=['Oltin','Qo‘rg‘oshin','Kumush','Mis','Temir','Cho‘yan','Alyuminiy','Deraza oynasi','G‘isht','Muz','Yog‘och','Po‘kak'],D=[19.3,11.3,10.5,8.9,7.8,7.1,2.7,2.5,1.8,.9,.7,.24],i=V[0]-1,m=D[i]*V[1],a=20+Math.cbrt(V[1])*18;
+g.fillStyle='#f4f1ea';g.fillRect(0,0,360,200);g.fillStyle='#8a94a6';g.fillRect(90,150,180,12);g.fillRect(170,162,20,26);g.fillStyle='hsl('+(i*28)+',55%,55%)';g.fillRect(180-a/2,150-a,a,a);g.fillStyle='#222';g.font='16px sans-serif';g.fillText(m.toFixed(1)+' g',150,30);
+return`${N[i]}: ρ = ${D[i]} g/cm³, V = ${V[1]} cm³ → m = ρ·V = ${m.toFixed(1)} g`},
+g:b=>chal(b,{t:'Zichlikni top (ρ = m / V)',e:'🔎',s:[{l:'ρ (g/cm³)',min:0,max:12,v:0,st:.1}],lv:[{g:'m = 54 g, V = 20 cm³',x:2.7,tl:.1},{g:'m = 78 g, V = 10 cm³',x:7.8,tl:.1},{g:'m = 24 g, V = 100 cm³',x:.24,tl:.1}],
+f:(v,l)=>[Math.abs(v[0]-l.x)<=l.tl,`To‘g‘ri javob ${l.x} g/cm³; sizniki ${v[0]}`]})};
+M[12]={e:'🧪',gt:'🎮 Tajribani tartibga sol',s:[{l:'Jism',min:1,max:6,v:1,nm:['Po‘kak','Yog‘och','Muz','G‘isht','Alyuminiy','Temir']}],
+sci:'Suvning zichligi 1 g/cm³. Jism zichligi suyuqlik zichligidan kichik bo‘lsa suzadi, katta bo‘lsa cho‘kadi. Qattiq jism hajmi suv sathining o‘zgarishidan (V = V₂ − V₁) yoki V = a·b·c formulasidan topiladi.',
+life:'Zichlikni bilib, jism qanday moddadan ekanini aniqlash mumkin: kalit temirdan (7,8 g/cm³) bo‘lsa cho‘kadi, yog‘och brusok (0,7 g/cm³) suzadi.',
+les:'Amaliy ish: kalit massasini tortib, menzurka yordamida hajmini toping, so‘ng yog‘och brusokni o‘lchang. Simulyatsiyada jismni almashtirib, suzish yoki cho‘kishni kuzating.',
+d:(g,V,s,dt)=>{const D=[.24,.7,.9,1.8,2.7,7.8],N=['Po‘kak','Yog‘och','Muz','G‘isht','Alyuminiy','Temir'],i=V[0]-1,r=D[i],tg=r<1?90-30*(1-r):145;s.y=s.y===undefined?30:s.y+(tg-s.y)*Math.min(1,dt*4);
+g.fillStyle='#f3f6fa';g.fillRect(0,0,360,200);g.fillStyle='rgba(59,154,201,.45)';g.fillRect(90,90,180,90);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(90,40,180,140);g.fillStyle='hsl('+(i*50)+',50%,50%)';g.fillRect(165,s.y,30,30);
+return`${N[i]}: ρ = ${r} g/cm³ ${r<1?'<':'>'} 1 g/cm³ (suv) → ${r<1?'suzadi':'cho‘kadi'}`},
+g:b=>order(b,['Kalitning massasini tarozida torting','Menzurkaga suv quyib, suv hajmini (V₁) o‘lchang','Kalitni ipga bog‘lab suvga tushiring va hajmni (V₂) o‘lchang','Hajm o‘zgarishini V = V₂ − V₁ bo‘yicha hisoblang','Zichlikni ρ = m / V formulasi bilan toping','Jadvaldan kalit qaysi moddadan ekanini aniqlang'],'Zichlikni aniqlash tajribasini tartibga soling')};
+M[13]={e:'♨️',gt:'🎮 Bug‘lanish viktorinasi',s:[{l:'Quyosh issiqligi',min:0,max:10,v:6}],
+sci:'Bug‘lanish — suyuqlikning gazga aylanishi (suyuqlik sirtida). Suv qizdirilganda ichida pufakchalar hosil bo‘lsa, bu qaynash; suv 100 °C da qaynaydi. Kondensatsiya — suv bug‘ining mayda suv tomchilariga aylanishi.',
+life:'Qaynatilgan suv mikroblardan tozalanadi, ammo qaynoq suv kuydiradi. Qozon qopqog‘ida va deraza oynasida tomchilar kondensatsiyadan hosil bo‘ladi. O‘simliklar bug‘latib o‘zini qizib ketishdan himoya qiladi.',
+les:'Quyosh issiqligini o‘zgartiring: dengizdan bug‘ ko‘tariladi, bulut hosil bo‘ladi va yomg‘ir yog‘adi — suvning tabiatda aylanishi.',
+d:(g,V,s,dt)=>{if(!s.v){s.v=[];s.r=[];s.c=0}
+if(Math.random()<V[0]*dt*3)s.v.push({x:30+Math.random()*300,y:150});s.v=s.v.filter(p=>{p.y-=45*dt;if(p.y<70){s.c++;return false}return true});if(s.c>=8){s.c-=8;s.r.push({x:110+Math.random()*140,y:80})}s.r=s.r.filter(p=>{p.y+=110*dt;return p.y<150});
+g.fillStyle='#dcecf8';g.fillRect(0,0,360,200);g.fillStyle='#3b8fc9';g.fillRect(0,150,360,50);g.font='26px serif';g.fillText('☀️',10,32);g.fillStyle='#fff';g.beginPath();g.ellipse(180,55,40+s.c*4,14+s.c*2,0,0,7);g.fill();
+g.fillStyle='rgba(255,255,255,.9)';s.v.forEach(p=>{g.beginPath();g.arc(p.x,p.y,3,0,7);g.fill()});g.fillStyle='#2b6cb0';s.r.forEach(p=>g.fillRect(p.x,p.y,2,8));
+return V[0]==0?'Issiqlik yo‘q: bug‘lanish deyarli bo‘lmaydi':'Bug‘lanish ↑ → kondensatsiya (bulut) → yog‘in ↓'},
+g:b=>quiz(b,[['Suyuqlikning gazga aylanishi nima deyiladi?',['Kondensatsiya','Bug‘lanish','Qotish'],1,'Bug‘lanish — suyuqlikning gazga aylanish jarayoni.'],
+['Suv necha °C da qaynaydi?',['50 °C','80 °C','100 °C'],2,'Suv 100 °C da qaynaydi.'],
+['Qozon qopqog‘ida suv tomchilari nega paydo bo‘ladi?',['Suv bug‘i kondensatsiyalanadi','Qopqoq suv chiqaradi','Havo suvga aylanadi'],0,'Kondensatsiya — suv bug‘ining mayda tomchilarga aylanishi.'],
+['Cho‘milgandan keyin nega sovuq qotamiz?',['Suv bug‘lanib, tanadan issiqlik oladi','Havo sovib ketadi','Suv sovuq bo‘ladi'],0,'Suyuqlik gazga aylanishi uchun tashqaridan issiqlik oladi.'],
+['Yer yuzasidan ko‘tarilgan suv bug‘lari yomg‘irni qanday hosil qiladi?',['Kondensatsiyalanib bulut va yog‘in hosil qiladi','Yerga qaytib tushadi','Suv bug‘i yonib ketadi'],0,'Atmosfera sovishi bilan bug‘ tomchilarga aylanadi.']])};
+M[14]={e:'🌧️',gt:'🎮 Yomg‘ir viktorinasi',s:[{l:'Suv harorati (°C)',min:20,max:95,v:80},{l:'Petri ustida',min:0,max:1,v:1,nm:['Muzsiz','Muz bilan']}],
+sci:'Idish ichidagi issiq nam havo yuqoriga ko‘tarilib, sovuq sirtga urilganda kondensatsiyalanadi va tomchilar hosil bo‘ladi. Atmosferada ham issiq nam havo yuqoridagi sovuq havo bilan ta’sirlashganda yog‘ingarchilik hosil bo‘ladi.',
+life:'Sun’iy yog‘ingarchilik qishloq xo‘jaligiga, suv omborlarini to‘ldirishga va qurg‘oqchilikning oldini olishga yordam beradi. Buning uchun yetarli suv, shamol tezligi va kichik bulutlar kerak.',
+les:'Amaliy ish: shisha idishga 1/3 gacha qaynagan suv quying, ustini petri likopchasi bilan yoping, ustiga muz qo‘ying. Sovuq suv bilan qaytaring va taqqoslang (issiq suvda ehtiyot bo‘ling).',
+d:(g,V,s,dt)=>{if(!s.d)s.d=[];const rate=(V[0]-20)/75*(V[1]?1:.2);if(Math.random()<rate*dt*10)s.d.push({x:130+Math.random()*100,y:62});s.d=s.d.filter(p=>{p.y+=45*dt;return p.y<125});
+g.fillStyle='#f3f6fa';g.fillRect(0,0,360,200);g.fillStyle=V[0]>60?'#f6b98f':'#bfe0f4';g.fillRect(112,130,136,40);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(110,60,140,110);g.fillStyle='#cfd8e3';g.fillRect(105,52,150,8);
+if(V[1]){g.fillStyle='#bfe8f7';for(let k=0;k<3;k++)g.fillRect(140+k*30,36,22,16)}
+g.fillStyle='rgba(120,120,140,.35)';for(let k=0;k<5;k++){g.beginPath();g.arc(130+k*25,120-((s.t*25+k*12)%55),6,0,7);g.fill()}g.fillStyle='#2b6cb0';s.d.forEach(p=>{g.beginPath();g.arc(p.x,p.y,3,0,7);g.fill()});
+return V[1]&&V[0]>=50?'Bug‘ sovuq sirtda kondensatsiyalanadi — tomchilar (yomg‘ir) hosil bo‘ldi':'Tomchilar kam: issiq suv va sovuq sirt kerak'},
+g:b=>quiz(b,[['Idish ichida tomchilar qaysi hodisa tufayli hosil bo‘ladi?',['Kondensatsiya','Qaynash','Erish'],0,'Issiq nam havo sovuq sirtda kondensatsiyalanadi.'],
+['Sun’iy yomg‘ir uchun nima zarur?',['Yetarli suv, shamol tezligi va kichik bulutlar','Faqat quyosh nuri','Faqat sovuq havo'],0,'Darslikda shu shartlar keltirilgan.'],
+['Sun’iy yog‘ingarchilikning foydasi qaysi?',['Qurg‘oqchilikning oldini oladi','Yerni qotiradi','Suv omborlarini quritadi'],0,'U qishloq xo‘jaligiga va suv omborlariga ham yordam beradi.'],
+['Tajribada petri likopchasiga muz nega qo‘yiladi?',['Yuqori sirtni sovutib, bug‘ni kondensatsiyalash uchun','Suvni qizdirish uchun','Idishni og‘irlashtirish uchun'],0,'Sovuq sirtda bug‘ tomchilarga aylanadi.']])};
+M[15]={e:'🍬',gt:'🎮 Novvot tayyorla',s:[{l:'Kun',min:0,max:7,v:0}],
+sci:'Novvot — shakar qiyomidan olinadigan yirik qand kristallari; tarkibida 99,75% saxaroza bor. Suv bug‘langach, qiyomdagi shakar tayoqchada kristall holida qoladi.',
+life:'Novvot Yaqin va O‘rta Sharq mamlakatlarida keng tarqalgan shirinlik. Shirinliklarni me’yorida iste’mol qilish kerak.',
+les:'Loyiha (kattalar nazoratida, texnika xavfsizligiga rioya qiling): 0,5 l suv va 1 kg shakarni past olovda qaynating, sovitib, tayoqchali idishlarga quying va bir necha kun kuting.',
+d:(g,V)=>{const D=V[0],n=Math.round(D*3.5),z=3+D*.6;g.fillStyle='#f6f2ea';g.fillRect(0,0,360,200);g.fillStyle='rgba(230,180,60,.45)';g.fillRect(122,70+D*8,116,110-D*8);g.strokeStyle='#557';g.lineWidth=3;g.strokeRect(120,40,120,140);g.fillStyle='#8a6a4a';g.fillRect(178,24,4,140);g.fillStyle='#fff3c9';g.strokeStyle='#d9b85a';g.lineWidth=1;
+for(let k=0;k<n;k++){const x=170+(k*37)%20,y=160-(k*23)%85;g.fillRect(x,y,z,z);g.strokeRect(x,y,z,z)}
+return`${D}-kun: suv bug‘lanmoqda, tayoqchada ${n} ta kristall`},
+g:b=>order(b,['Qozonga 0,5 l suv va 1 kg shakar solib, past olovda qaynating','Shisha idishlarga oziq-ovqat bo‘yog‘ini soling','Sovigan shakar eritmasini idishlarga quying','Har bir idishga ingichka yog‘och tayoqcha soling','Suv bug‘lanishi uchun idishlarni bir necha kun qoldiring','Tayoqchada hosil bo‘lgan kristallarni kuzating'],'Novvot tayyorlash tartibini tuzing')};
+/*MODS-END*/
+/* INTERFEYS */
+function home(){let n=0;$('#top').hidden=true;$('#home').hidden=false;$('#home').innerHTML=BOB.map((b,i)=>`<details class="card2" ${i<2?'open':''}><summary><b>${b[1]} ${b[0]}</b></summary>`+b[2].map(t=>{n++;return M[n]?`<button class="tp" onclick="open_(${n})">${M[n].e} ${n}. ${t}</button>`:`<div class="lk">🔒 ${n}. ${t}</div>`}).join('')+'</details>').join('')+`<p class="mu">Tayyor mavzular: ${Object.keys(M).length} / 86. Qolganlari keyingi partiyalarda qo‘shiladi.</p>`}
+const lab=(x,v)=>x.nm?x.nm[v-x.min]:v;
+function setV(j,v){V[j]=v;$('#v'+j).textContent=lab(cur.s[j],v)}
+function open_(i){cid=i;cur=M[i];V=cur.s.map(x=>x.v);st={t:0,p:[]};$('#home').hidden=true;$('#top').hidden=false;$('#gm').hidden=true;$('#ttl').textContent=`${cur.e} ${i}-mavzu. ${TT[i-1]}`;
+$('#ctl').innerHTML=cur.s.map((x,j)=>`<label>${x.l}: <b id="v${j}">${lab(x,x.v)}</b><input id="r${j}" type="range" min="${x.min}" max="${x.max}" value="${x.v}" oninput="setV(${j},+this.value)"></label>`).join('')+'<button onclick="open_(cid)">↺ Qayta</button>';
+$('#info').innerHTML=`<p class="s"><b>🔬 Ilmiy:</b> ${cur.sci}</p><p class="l"><b>🏠 Hayotiy:</b> ${cur.life}</p><p class="d"><b>📚 Darsga oid:</b> ${cur.les}</p>`;$('#gbtn').textContent=cur.gt;scrollTo(0,0)}
+function playG(){$('#gm').hidden=false;cur.g($('#gm'));$('#gm').scrollIntoView({behavior:'smooth'})}
+let last=0;function loop(ts){const dt=Math.min(.05,(ts-last)/1000||0);last=ts;if(cur&&!$('#top').hidden){st.t+=dt;g.clearRect(0,0,360,200);$('#ro').textContent=cur.d(g,V,st,dt)}requestAnimationFrame(loop)}
+home();addS(0);requestAnimationFrame(loop);
+</script></body></html>
